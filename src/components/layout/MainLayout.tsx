@@ -1,37 +1,13 @@
-import { Layout, Menu } from "antd";
+import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
-import sidebarItemsGenerator from "../../utils/sidebarItemsGenerator";
-import { adminPaths } from "../../routes/admin.routes";
-const { Header, Content, Footer, Sider } = Layout;
+import Sidebar from "./Sidebar";
+const { Header, Content } = Layout;
 
 const MainLayout = () => {
-    const sidebarItems = sidebarItemsGenerator(adminPaths, 'admin');
 
     return (
         <Layout style={{ height: "100vh" }}>
-            <Sider
-                breakpoint="lg"
-                collapsedWidth="0"
-                onBreakpoint={(broken) => {
-                    console.log(broken);
-                }}
-                onCollapse={(collapsed, type) => {
-                    console.log(collapsed, type);
-                }}
-            >
-                <div
-                    className="demo-logo-vertical"
-                    style={{
-                        fontSize: "18px",
-                        color: "white",
-                        padding: "8px 24px",
-                        fontWeight: "bold",
-                    }}
-                >
-                    PH University
-                </div>
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={["4"]} items={sidebarItems} />
-            </Sider>
+            <Sidebar />
             <Layout>
                 <Header style={{ padding: 0 }} />
                 <Content style={{ margin: "24px 16px 0" }}>
@@ -44,9 +20,6 @@ const MainLayout = () => {
                         <Outlet />
                     </div>
                 </Content>
-                <Footer style={{ textAlign: "center" }}>
-                    Ant Design ©{new Date().getFullYear()} Created by Ant UED
-                </Footer>
             </Layout>
         </Layout>
     );
