@@ -1,33 +1,32 @@
-import { Button } from "antd";
-import { FieldValues, useForm } from "react-hook-form";
-import { useLogOutMutation } from "../redux/features/auth/authApi";
+import { Button, Col, Row } from "antd";
+import { FieldValues } from "react-hook-form";
+import { useLogInMutation } from "../redux/features/auth/authApi";
 import { usePHDispatch } from "../redux/hooks";
 import { setUser, TUser } from "../redux/features/auth/authSlice";
 import verifyToken from "../utils/verifyToken";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import PHForm from "../components/form/PHForm";
+import PHInput from "../components/form/PHInput";
+import PHEye from "../assets/icons/PHEye";
+import { useState } from "react";
+import PHEyeOff from "../assets/icons/PHEyeOff";
 
 const Login = () => {
-    const { register, handleSubmit } = useForm({
-        defaultValues: {
-            id: "A-0001",
-            password: "admin123",
-        },
-    });
     const navigate = useNavigate();
     const dispatch = usePHDispatch();
-    const [login] = useLogOutMutation();
+    const [login] = useLogInMutation();
+    const [isShowPassword, setIsShowPassword] = useState(false);
 
     const onSubmit = async (data: FieldValues) => {
         const toastId = toast.loading("Logging user...");
         try {
             const userInfo = {
-                id: data.id,
+                id: data.userId,
                 password: data.password,
             };
             const res = await login(userInfo).unwrap();
             const user = verifyToken(res.data.accessToken) as TUser;
-
             dispatch(setUser({ user, token: res.data.accessToken }));
             navigate("/");
             toast.success("Login success.", { id: toastId, duration: 2000 });
@@ -37,19 +36,51 @@ const Login = () => {
         }
     };
     return (
-        <form onSubmit={handleSubmit(onSubmit)} style={{ maxWidth: "280px" }}>
-            <div style={{ marginBottom: "10px" }}>
-                <label htmlFor="id">ID: </label>
-                <input {...register("id")} placeholder="ID" id="id" />
-            </div>
-            <div style={{ marginBottom: "10px" }}>
-                <label htmlFor="password">Password: </label>
-                <input {...register("password")} placeholder="Password" id="password" />
-            </div>
-            <Button htmlType="submit" type="primary">
-                Log in
-            </Button>
-        </form>
+        <Row
+            justify="center"
+            align="middle"
+            style={{
+                minHeight: "100vh",
+            }}
+        >
+            <Col span={6}>
+                <PHForm onSubmit={onSubmit}>
+                    <PHInput
+                        name="userId"
+                        type="text"
+                        label="User Id"
+                        placeholder="Enter your user id ..."
+                    />
+                    <PHInput
+                        label="Password"
+                        name="password"
+                        type={isShowPassword ? "text" : "password"}
+                        placeholder="Enter your password ..."
+                        suffix={
+                            <button
+                                type="button"
+                                style={{
+                                    border: "0px",
+                                    background: "#FFF",
+                                    marginBottom: "-4px",
+                                    cursor: "pointer",
+                                }}
+                                onClick={() => setIsShowPassword((prev) => !prev)}
+                            >
+                                {isShowPassword ? (
+                                    <PHEyeOff svgProps={{ height: "16px", width: "16x" }} />
+                                ) : (
+                                    <PHEye svgProps={{ height: "16px", width: "16x" }} />
+                                )}
+                            </button>
+                        }
+                    />
+                    <Button htmlType="submit" type="primary">
+                        Log in
+                    </Button>
+                </PHForm>
+            </Col>
+        </Row>
     );
 };
 

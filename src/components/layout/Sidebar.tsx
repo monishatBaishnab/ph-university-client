@@ -3,6 +3,8 @@ import sidebarItemsGenerator from "../../utils/sidebarItemsGenerator";
 import { adminPaths } from "../../routes/admin.routes";
 import { facultyPaths } from "../../routes/faculty.routes";
 import { studentPaths } from "../../routes/student.routes";
+import { usePHSelector } from "../../redux/hooks";
+import { selectCurrentUser } from "../../redux/features/auth/authSlice";
 const { Sider } = Layout;
 const userRoles = {
     STUDENT: "student",
@@ -11,10 +13,10 @@ const userRoles = {
 };
 
 const Sidebar = () => {
-    const role = "admin";
+    const user = usePHSelector(selectCurrentUser);
     let sidebarItems;
 
-    switch (role) {
+    switch (user!.role) {
         case userRoles.ADMIN:
             sidebarItems = sidebarItemsGenerator(adminPaths, userRoles.ADMIN);
             break;
@@ -50,12 +52,7 @@ const Sidebar = () => {
             >
                 PH University
             </div>
-            <Menu
-                theme="dark"
-                mode="inline"
-                defaultSelectedKeys={["4"]}
-                items={sidebarItems}
-            />
+            <Menu theme="dark" mode="inline" defaultSelectedKeys={["4"]} items={sidebarItems} />
         </Sider>
     );
 };
