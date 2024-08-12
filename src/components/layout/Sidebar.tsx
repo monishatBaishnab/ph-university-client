@@ -40,6 +40,14 @@ const Sidebar = () => {
             onCollapse={(collapsed, type) => {
                 console.log(collapsed, type);
             }}
+            style={{
+                height: "100vh",
+                position: "sticky",
+                top: 0,
+                bottom: 0,
+                left: 0,
+                overflowY: 'auto'
+            }}
         >
             <div
                 className="demo-logo-vertical"

@@ -12,10 +12,10 @@ const MainLayout = () => {
         dispatch(logOut());
     };
     return (
-        <Layout style={{ height: "100vh" }}>
+        <Layout style={{ minHeight: "100vh" }}>
             <Sidebar />
             <Layout>
-                <Header style={{ padding: 0 }}>
+                <Header style={{ padding: 0, position: "sticky", top: 0, left: 0, right: 0, zIndex: 50 }}>
                     <div
                         style={{
                             height: "100%",

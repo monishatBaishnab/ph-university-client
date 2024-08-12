@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Form, Input } from "antd";
 import { Controller } from "react-hook-form";
 import { ReactNode } from "react";
 
@@ -13,43 +13,26 @@ const PHInput = ({
     name: string;
     type: string;
     placeholder?: string;
-    suffix?: ReactNode
+    suffix?: ReactNode;
 }) => {
     return (
-        <div
-            style={{
-                marginBottom: "10px",
-            }}
-        >
-            <div style={{ marginBottom: "4px" }}>
-                {label ? (
-                    <label
-                        style={{
-                            fontFamily: "sans-serif",
-                            color: "rgba(0, 0, 0, 0.88)",
-                            fontSize: "14px",
-                        }}
-                        htmlFor={name}
-                    >
-                        {label}
-                    </label>
-                ) : null}
-            </div>
-            <Controller
-                name={name}
-                render={({ field }) => (
+        <Controller
+            name={name}
+            render={({ field }) => (
+                <Form.Item label={label}>
                     <Input
                         {...field}
                         variant="outlined"
+                        size="large"
                         id={name}
                         type={type}
                         name={name}
                         placeholder={placeholder}
                         suffix={suffix}
                     />
-                )}
-            />
-        </div>
+                </Form.Item>
+            )}
+        />
     );
 };
 

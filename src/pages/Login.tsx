@@ -17,6 +17,10 @@ const Login = () => {
     const dispatch = usePHDispatch();
     const [login] = useLogInMutation();
     const [isShowPassword, setIsShowPassword] = useState(false);
+    const defaultUser = {
+        userId: "A-0001",
+        password: "admin123",
+    };
 
     const onSubmit = async (data: FieldValues) => {
         const toastId = toast.loading("Logging user...");
@@ -44,7 +48,7 @@ const Login = () => {
             }}
         >
             <Col span={6}>
-                <PHForm onSubmit={onSubmit}>
+                <PHForm defaultValues={defaultUser} onSubmit={onSubmit}>
                     <PHInput
                         name="userId"
                         type="text"
