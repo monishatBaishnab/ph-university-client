@@ -21,7 +21,7 @@ const PHForm = ({ onSubmit, children, defaultValues, resolver }: TPHFormProps) =
     if (resolver) {
         formConfig["resolver"] = resolver;
     }
-
+    console.log(formConfig);
     const methods = useForm(formConfig);
 
     return (

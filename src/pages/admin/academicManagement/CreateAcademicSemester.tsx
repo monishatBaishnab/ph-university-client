@@ -28,11 +28,12 @@ const CreateAcademicSemester = () => {
             )) as TResponse<TAcademicSemester>;
 
             if (res?.error) {
-                return toast.error(res.error.data.message), { id: toastId };
+                console.log(res.error);
+                return toast.error(res.error.data.message, { id: toastId });
             }
 
             if (res.data) {
-                toast.success("Successfully created Academic Semester."), { id: toastId };
+                toast.success("Successfully created Academic Semester.",  { id: toastId });
             }
         } catch (error) {
             console.log(error);
@@ -46,7 +47,7 @@ const CreateAcademicSemester = () => {
             <Flex justify="center" align="center">
                 <Col span={8}>
                     <PHForm
-                        // defaultValues={defaultSemesterValue}
+                        // defaultValues={defaultSemesterData}
                         onSubmit={handleSubmit}
                         resolver={zodResolver(academicSemesterSchema)}
                     >

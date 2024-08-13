@@ -9,7 +9,7 @@ import {
 import { RootState } from "../store";
 import { logOut, setUser } from "../features/auth/authSlice";
 import { toast } from "sonner";
-import { TError } from "../../types/global";
+import { TError } from "../../types";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: "http://localhost:5000/api/v1",
@@ -54,6 +54,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<FetchArgs, BaseQueryApi, Definition
 
 const baseApi = createApi({
     reducerPath: "baseApi",
+    tagTypes: ['academicSemesters', 'academicSemester'],
     baseQuery: baseQueryWithRefreshToken,
     endpoints: () => ({}),
 });
