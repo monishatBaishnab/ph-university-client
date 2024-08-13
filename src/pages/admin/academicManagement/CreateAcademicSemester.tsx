@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { academicSemesterSchema } from "../../../schemas/academicManagement.schema";
 import { useCreateAcademicSemesterMutation } from "../../../redux/features/admin/academicManagement.api";
 import { toast } from "sonner";
-import { TResponse } from "../../../types/global";
+import { TAcademicSemester, TResponse } from "../../../types";
 
 const CreateAcademicSemester = () => {
     const [createAcademicSemester] = useCreateAcademicSemesterMutation();
@@ -23,7 +23,9 @@ const CreateAcademicSemester = () => {
                 startMonth: data.startMonth,
                 endMonth: data.endMonth,
             };
-            const res = (await createAcademicSemester(semesterData)) as TResponse;
+            const res = (await createAcademicSemester(
+                semesterData
+            )) as TResponse<TAcademicSemester>;
 
             if (res?.error) {
                 return toast.error(res.error.data.message), { id: toastId };
