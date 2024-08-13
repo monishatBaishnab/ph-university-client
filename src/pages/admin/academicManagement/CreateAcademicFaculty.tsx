@@ -1,13 +1,12 @@
 import { Button, Col, Flex } from "antd";
 import PHForm from "../../../components/form/PHForm";
-import PHSelect from "../../../components/form/PHSelect";
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import { facultyNameOptions } from "../../../constants/academicFaculties";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { academicFacultySchema } from "../../../schemas/academicManagement.schema";
 import { useCreateAcademicFacultyMutation } from "../../../redux/features/admin/academicManagement.api";
 import { toast } from "sonner";
 import { TAcademicFaculty, TResponse } from "../../../types";
+import PHInput from "../../../components/form/PHInput";
 
 const CreateAcademicFaculty = () => {
     const [createAcademicFaculty] = useCreateAcademicFacultyMutation();
@@ -15,7 +14,6 @@ const CreateAcademicFaculty = () => {
         const toastId = toast.loading("Create Academic Faculty.");
         try {
             const res = (await createAcademicFaculty(data)) as TResponse<TAcademicFaculty>;
-            console.log(res);
             if (res?.error) {
                 console.log(res.error);
                 toast.error(res.error.data.message, { id: toastId });
@@ -36,12 +34,12 @@ const CreateAcademicFaculty = () => {
             <Flex justify="center" align="center">
                 <Col span={8}>
                     <PHForm onSubmit={handleSubmit} resolver={zodResolver(academicFacultySchema)}>
-                        <PHSelect
-                            name="name"
+                        <PHInput
                             key="name"
+                            name="name"
+                            type="text"
                             label="Academic Faculty Name"
-                            placeholder="Select a Academic Faculty"
-                            options={facultyNameOptions}
+                            placeholder="Write Academic Faculty Name."
                         />
                         <Button htmlType="submit" size="large" type="primary">
                             Save

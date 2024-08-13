@@ -54,7 +54,14 @@ const baseQueryWithRefreshToken: BaseQueryFn<FetchArgs, BaseQueryApi, Definition
 
 const baseApi = createApi({
     reducerPath: "baseApi",
-    tagTypes: ['academicSemesters', 'academicSemester', 'academicFaculties'],
+    tagTypes: [
+        "academicSemesters",
+        "academicSemester",
+        "academicFaculties",
+        "academicFaculty",
+        "academicDepartments",
+        "academicDepartment",
+    ],
     baseQuery: baseQueryWithRefreshToken,
     endpoints: () => ({}),
 });

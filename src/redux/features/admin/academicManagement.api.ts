@@ -1,4 +1,4 @@
-import { TAcademicFaculty, TAcademicSemester, TResponseRedux } from "../../../types";
+import { TAcademicDepartment, TAcademicFaculty, TAcademicSemester, TResponseRedux } from "../../../types";
 import baseApi from "../../api/baseApi";
 
 const academicManagementApi = baseApi.injectEndpoints({
@@ -98,6 +98,53 @@ const academicManagementApi = baseApi.injectEndpoints({
                 body: data,
             }),
         }),
+        getAllAcademicDepartment: builder.query({
+            providesTags: ["academicDepartments"],
+            query: (args) => {
+                const params = new URLSearchParams();
+
+                if (args) {
+                    args.forEach((arg: { name: string; value: string }) => {
+                        params.append(arg.name, arg.value);
+                    });
+                }
+
+                return {
+                    url: "/academic-departments",
+                    method: "GET",
+                    params: params,
+                };
+            },
+            transformResponse: (response: TResponseRedux<TAcademicDepartment[]>) => {
+                return {
+                    data: response?.data,
+                    meta: response?.meta,
+                };
+            },
+        }),
+        getSingleAcademicDepartment: builder.query({
+            query: (id) => {
+                return {
+                    url: `/academic-departments/${id ? id : " "}`,
+                    method: "GET",
+                };
+            },
+        }),
+        createAcademicDepartment: builder.mutation({
+            query: (data) => ({
+                url: "/academic-departments/create-academic-department",
+                method: "POST",
+                body: data,
+            }),
+        }),
+        updateAcademicDepartment: builder.mutation({
+            invalidatesTags: ["academicDepartments"],
+            query: ({ data, id }) => ({
+                url: `/academic-departments/${id ? id : " "}`,
+                method: "PATCH",
+                body: data,
+            }),
+        }),
     }),
 });
 
@@ -109,5 +156,9 @@ export const {
     useGetAllAcademicFacultiesQuery,
     useCreateAcademicFacultyMutation,
     useGetSingleAcademicFacultyQuery,
-    useUpdateAcademicFacultyMutation
+    useUpdateAcademicFacultyMutation,
+    useGetAllAcademicDepartmentQuery,
+    useGetSingleAcademicDepartmentQuery,
+    useCreateAcademicDepartmentMutation,
+    useUpdateAcademicDepartmentMutation,
 } = academicManagementApi;

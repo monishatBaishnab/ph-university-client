@@ -95,7 +95,6 @@ const AcademicSemesters = () => {
     }));
 
     const onChange: TableProps<TTableData>["onChange"] = (_pagination, filters, _sorter, extra) => {
-        console.log(filters);
         if (extra.action === "filter") {
             const queryParams: TParam[] = [];
             filters?.name?.forEach((item) =>

@@ -8,11 +8,10 @@ import { Button, Modal, Table, TableColumnsType } from "antd";
 import PHForm from "../../../components/form/PHForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { academicFacultySchema } from "../../../schemas/academicManagement.schema";
-import { facultyNameOptions } from "../../../constants/academicFaculties";
-import PHSelect from "../../../components/form/PHSelect";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 import { TAcademicSemester, TResponse } from "../../../types";
+import PHInput from "../../../components/form/PHInput";
 
 type TTableData = { name: string; key: string };
 
@@ -39,8 +38,6 @@ const AcademicFaculty = () => {
         setModalOpen(false);
         setAcademicFacultyId("");
     };
-
-    console.log(academicFaculty);
 
     const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
         setModalOpen(false);
@@ -90,10 +87,7 @@ const AcademicFaculty = () => {
         <div>
             <h1 style={{ marginBottom: "40px" }}>Academic Faculty</h1>
 
-            <Table
-                columns={columns}
-                dataSource={tableData}
-            />
+            <Table columns={columns} dataSource={tableData} />
 
             <Modal
                 open={modalOpen}
@@ -109,12 +103,12 @@ const AcademicFaculty = () => {
                             onSubmit={handleSubmit}
                             resolver={zodResolver(academicFacultySchema)}
                         >
-                            <PHSelect
-                                name="name"
+                            <PHInput
                                 key="name"
+                                name="name"
+                                type="text"
                                 label="Academic Faculty Name"
-                                placeholder="Select a Academic Faculty"
-                                options={facultyNameOptions}
+                                placeholder="Write Academic Faculty Name."
                             />
                             <Button htmlType="submit" type="primary">
                                 Save
