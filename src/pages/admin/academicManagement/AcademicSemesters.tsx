@@ -6,7 +6,7 @@ import {
 import { Button, Modal, Table, TableColumnsType, TableProps } from "antd";
 import { TAcademicSemester, TResponse } from "../../../types";
 import { useState } from "react";
-import { nameOptions, yearFilters, yearOptions } from "../../../constants/semesters";
+import { nameOptions, yearFilters, yearOptions } from "../../../constants/academicSemesters";
 import PHSelect from "../../../components/form/PHSelect";
 import PHForm from "../../../components/form/PHForm";
 import { monthOptions } from "../../../constants/global";
