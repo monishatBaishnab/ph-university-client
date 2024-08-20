@@ -1,97 +1,93 @@
-import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api";
-import { Button, Table, TableColumnsType, TableProps } from "antd";
-import { TAcademicSemester } from "../../../types";
+import { Button, Pagination, Popconfirm, Space, Table, TableColumnsType } from "antd";
 import { useState } from "react";
-import { yearFilters } from "../../../constants/academicSemesters";
 import { useGetAllStudentQuery } from "../../../redux/features/admin/userManagement.api";
+import { TStudentData } from "../../../types/userManagement.type";
 
-type TTableData = Pick<TAcademicSemester, "name" | "year" | "startMonth" | "endMonth"> & {
+type TTableData = Pick<TStudentData, "id" | "fullName" | "email"> & {
     key: string;
 };
 
-type TParam = { name: string; value: string };
+type TParam = { name: string; value: string | number };
 
 const StudentsData = () => {
-    const [params, setParams] = useState<TParam[]>([]);
-    const { data: academicSemesters } = useGetAllSemestersQuery(params);
-    const { data: studentsData } = useGetAllStudentQuery(params);
-    console.log(studentsData);
+    const [params] = useState<TParam[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const { data: studentsData } = useGetAllStudentQuery([
+        ...params,
+        { name: "limit", value: 2 },
+        { name: "sort", value: "id" },
+        { name: "page", value: currentPage },
+    ]);
+    const metaData = studentsData?.meta;
+
+    const confirm = () => {
+        console.log("Confirmed");
+    };
+    const cancel = () => {
+        console.log("Canceled.");
+    };
 
     const columns: TableColumnsType<TTableData> = [
         {
-            title: "Name",
-            dataIndex: "name",
-            showSorterTooltip: { target: "full-header" },
-            filters: [
-                {
-                    text: "Autumn",
-                    value: "Autumn",
-                },
-                {
-                    text: "Summer",
-                    value: "Summer",
-                },
-                {
-                    text: "Fall",
-                    value: "Fall",
-                },
-            ],
+            title: "Student Id",
+            dataIndex: "id",
         },
         {
-            title: "Year",
-            dataIndex: "year",
-            filters: yearFilters,
+            title: "Full Name",
+            dataIndex: "fullName",
         },
         {
-            title: "Start Month",
-            dataIndex: "startMonth",
-        },
-        {
-            title: "End Month",
-            dataIndex: "endMonth",
+            title: "Email",
+            dataIndex: "email",
         },
         {
             title: "Action",
             dataIndex: "",
             key: "x",
             render: () => (
-                <Button size="middle" type="dashed">
-                    Update
-                </Button>
+                <Space>
+                    <Button size="middle" type="dashed">
+                        Details
+                    </Button>
+                    <Button size="middle" type="dashed">
+                        Update
+                    </Button>
+                    <Popconfirm
+                        placement="topRight"
+                        title="Delete the task"
+                        description="Are you sure to delete this task?"
+                        onConfirm={confirm}
+                        onCancel={cancel}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <Button danger type="dashed">
+                            Blocked
+                        </Button>
+                    </Popconfirm>
+                </Space>
             ),
+            width: "1%",
         },
     ];
 
-    const tableData = academicSemesters?.data?.map(({ _id, name, year, startMonth, endMonth }) => ({
+    const tableData = studentsData?.data?.map(({ _id, id, fullName, email }) => ({
         key: _id,
-        name,
-        year,
-        startMonth,
-        endMonth,
+        id,
+        fullName,
+        email,
     }));
-
-    const onChange: TableProps<TTableData>["onChange"] = (_pagination, filters, _sorter, extra) => {
-        if (extra.action === "filter") {
-            const queryParams: TParam[] = [];
-            filters?.name?.forEach((item) =>
-                queryParams.push({ name: "name", value: item as string })
-            );
-            filters?.year?.forEach((item) =>
-                queryParams.push({ name: "year", value: item as string })
-            );
-            setParams(queryParams);
-        }
-    };
 
     return (
         <div>
             <h1 style={{ marginBottom: "40px" }}>Students Data</h1>
 
-            <Table
-                columns={columns}
-                dataSource={tableData}
-                onChange={onChange}
-                showSorterTooltip={{ target: "sorter-icon" }}
+            <Table pagination={false} columns={columns} dataSource={tableData} />
+            <Pagination
+                current={currentPage}
+                onChange={(page) => setCurrentPage(page)}
+                total={metaData?.total}
+                pageSize={metaData?.limit}
             />
         </div>
     );

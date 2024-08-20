@@ -5,11 +5,11 @@ import { NavLink } from "react-router-dom";
 type TSidebarItems = {
     key: string;
     label: ReactNode | string;
-    children?: TSidebarItems;
-}[];
+    children?: TSidebarItems[];
+} | undefined;
 
 const sidebarItemsGenerator = (items: TUserPath[], role: string) => {
-    const sidebarItems = items?.reduce((acc: TSidebarItems, item: TUserPath) => {
+    const sidebarItems = items?.reduce((acc: TSidebarItems[], item: TUserPath) => {
         if (item.name && item.path) {
             acc.push({
                 key: item.name,
@@ -20,10 +20,17 @@ const sidebarItemsGenerator = (items: TUserPath[], role: string) => {
             acc.push({
                 label: item.name,
                 key: item.name,
-                children: item.children.map((subItem) => ({
-                    key: subItem.name,
-                    label: <NavLink to={`/${role}/${subItem.path}`}>{subItem.name}</NavLink>,
-                })),
+                children: item.children.map((subItem) => {
+                    if (subItem?.name) {
+                        return {
+                            key: subItem.name,
+                            label: (
+                                <NavLink to={`/${role}/${subItem.path}`}>{subItem.name}</NavLink>
+                            ),
+                        };
+                    }
+                    return undefined;
+                }),
             });
         }
         return acc;
