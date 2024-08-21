@@ -1,9 +1,11 @@
+import { TAcademicSemester } from "./academicManagement.types";
+
 export interface TSemesterRegistration {
-    academicSemester: string
-    status: string
-    startDate: string
-    endDate: string
-    minCredit: number
-    maxCredit: number
-  }
-  
+    _id: string;
+    academicSemester: TAcademicSemester;
+    status: string;
+    startDate: string;
+    endDate: string;
+    minCredit: number;
+    maxCredit: number;
+}

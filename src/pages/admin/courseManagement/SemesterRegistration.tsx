@@ -24,8 +24,8 @@ const CreateAcademicSemester = () => {
         const toastId = toast.loading("Creating Semester Registration.");
         const semesterData = {
             ...data,
-            minCredit: Number(data.startDate),
-            maxCredit: Number(data.endDate),
+            minCredit: Number(data.minCredit),
+            maxCredit: Number(data.maxCredit),
         };
         console.log(semesterData);
         try {
@@ -54,7 +54,7 @@ const CreateAcademicSemester = () => {
                 <Col span={8}>
                     <PHForm
                         // defaultValues={defaultSemesterData}
-                        onSubmit={handleSubmit} 
+                        onSubmit={handleSubmit}
                     >
                         <PHSelect
                             disabled={aSemestersLoading}
