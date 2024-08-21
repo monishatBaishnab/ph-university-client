@@ -1,4 +1,4 @@
-import { TResponseRedux, TSemesterRegistration } from "../../../types";
+import { TCourses, TResponseRedux, TSemesterRegistration } from "../../../types";
 import baseApi from "../../api/baseApi";
 
 const courseManagementApi = baseApi.injectEndpoints({
@@ -9,7 +9,7 @@ const courseManagementApi = baseApi.injectEndpoints({
                 method: "POST",
                 body: data,
             }),
-            invalidatesTags: ['semesterRegistrations']
+            invalidatesTags: ["semesterRegistrations"],
         }),
         getAllSemesterRegistration: builder.query({
             providesTags: ["semesterRegistrations"],
@@ -43,6 +43,38 @@ const courseManagementApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["semesterRegistrations"],
         }),
+        createCourse: builder.mutation({
+            query: (data) => ({
+                url: "/courses/create-course",
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["courses"],
+        }),
+        getAllCourses: builder.query({
+            providesTags: ["courses"],
+            query: (args) => {
+                const params = new URLSearchParams();
+
+                if (args) {
+                    args.forEach((arg: { name: string; value: string }) => {
+                        params.append(arg.name, arg.value);
+                    });
+                }
+
+                return {
+                    url: "/courses",
+                    method: "GET",
+                    params,
+                };
+            },
+            transformResponse: (response: TResponseRedux<TCourses[]>) => {
+                return {
+                    data: response?.data,
+                    meta: response?.meta,
+                };
+            },
+        }),
     }),
 });
 
@@ -50,4 +82,6 @@ export const {
     useCreateSemesterRegistrationMutation,
     useGetAllSemesterRegistrationQuery,
     useUpdateSemesterRegistrationMutation,
+    useGetAllCoursesQuery,
+    useCreateCourseMutation
 } = courseManagementApi;

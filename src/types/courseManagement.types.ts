@@ -9,3 +9,18 @@ export interface TSemesterRegistration {
     minCredit: number;
     maxCredit: number;
 }
+export interface PreRequisiteCourse {
+    course: string;
+    isDeleted: boolean;
+}
+
+export interface TCourses {
+    title: string;
+    prefix: string;
+    code: number;
+    credits: number;
+    preRequisiteCourses: PreRequisiteCourse[];
+    isDeleted: boolean;
+    _id: string;
+    __v: number;
+}

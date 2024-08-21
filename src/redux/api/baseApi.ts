@@ -62,6 +62,7 @@ const baseApi = createApi({
         "academicDepartments",
         "academicDepartment",
         "semesterRegistrations",
+        "courses"
     ],
     baseQuery: baseQueryWithRefreshToken,
     endpoints: () => ({}),

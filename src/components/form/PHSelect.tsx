@@ -7,9 +7,10 @@ type TPHSelect = {
     options: { value: string; label: string; disabled?: boolean }[] | undefined;
     placeholder?: string;
     disabled?: boolean;
+    mode?: "multiple" | "tags";
 };
 
-const PHSelect = ({ name, label, options, placeholder, disabled }: TPHSelect) => {
+const PHSelect = ({ name, label, options, placeholder, disabled, mode }: TPHSelect) => {
     return (
         <Controller
             name={name}
@@ -18,6 +19,7 @@ const PHSelect = ({ name, label, options, placeholder, disabled }: TPHSelect) =>
                     <Form.Item label={label}>
                         <Select
                             {...field}
+                            mode={mode}
                             disabled={disabled}
                             size="large"
                             style={{ width: "100%" }}
