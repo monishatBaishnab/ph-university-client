@@ -7,11 +7,11 @@ import {
 import { Button, Modal, Table, TableColumnsType } from "antd";
 import PHForm from "../../../components/form/PHForm";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { academicFacultySchema } from "../../../schemas/academicManagement.schema";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 import { TAcademicSemester, TResponse } from "../../../types";
 import PHInput from "../../../components/form/PHInput";
+import { academicFacultySchema } from "../../../schemas";
 
 type TTableData = { name: string; key: string };
 

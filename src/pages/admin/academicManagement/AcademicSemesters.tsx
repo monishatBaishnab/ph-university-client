@@ -13,7 +13,7 @@ import { monthOptions } from "../../../constants/global";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { academicSemesterSchema } from "../../../schemas/academicManagement.schema";
+import { academicSemesterSchema } from "../../../schemas";
 
 type TTableData = Pick<TAcademicSemester, "name" | "year" | "startMonth" | "endMonth"> & {
     key: string;

@@ -2,11 +2,11 @@ import { Button, Col, Flex } from "antd";
 import PHForm from "../../../components/form/PHForm";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { academicFacultySchema } from "../../../schemas/academicManagement.schema";
 import { useCreateAcademicFacultyMutation } from "../../../redux/features/admin/academicManagement.api";
 import { toast } from "sonner";
 import { TAcademicFaculty, TResponse } from "../../../types";
 import PHInput from "../../../components/form/PHInput";
+import { academicFacultySchema } from "../../../schemas";
 
 const CreateAcademicFaculty = () => {
     const [createAcademicFaculty] = useCreateAcademicFacultyMutation();

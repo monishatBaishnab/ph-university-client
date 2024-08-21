@@ -11,9 +11,9 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 import { TAcademicDepartment, TResponse } from "../../../types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { academicDepartmentSchema } from "../../../schemas/academicManagement.schema";
 import PHInput from "../../../components/form/PHInput";
 import PHSelect from "../../../components/form/PHSelect";
+import { academicDepartmentSchema } from "../../../schemas";
 type TTableData = { name: string; academicFaculty: string; key: string };
 
 const AcademicDepartment = () => {

@@ -5,10 +5,10 @@ import PHSelect from "../../../components/form/PHSelect";
 import { nameOptions, yearOptions } from "../../../constants/academicSemesters";
 import { monthOptions } from "../../../constants/global";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { academicSemesterSchema } from "../../../schemas/academicManagement.schema";
 import { useCreateAcademicSemesterMutation } from "../../../redux/features/admin/academicManagement.api";
 import { toast } from "sonner";
 import { TAcademicSemester, TResponse } from "../../../types";
+import { academicSemesterSchema } from "../../../schemas";
 
 const CreateAcademicSemester = () => {
     const [createAcademicSemester] = useCreateAcademicSemesterMutation();

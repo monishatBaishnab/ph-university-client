@@ -9,8 +9,8 @@ import {
     useGetAllAcademicFacultiesQuery,
 } from "../../../redux/features/admin/academicManagement.api";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { academicDepartmentSchema } from "../../../schemas/academicManagement.schema";
 import { TAcademicDepartment, TResponse } from "../../../types";
+import { academicDepartmentSchema } from "../../../schemas";
 
 const CreateAcademicDepartment = () => {
     const [createAcademicDepartment] = useCreateAcademicDepartmentMutation();
